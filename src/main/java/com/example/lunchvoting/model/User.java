@@ -1,6 +1,6 @@
 package com.example.lunchvoting.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,8 @@ import java.util.Set;
  *
  */
 @Entity
-public class User extends AbstractNamedEntity {
+@Table(name = "users")
+public class User extends AbstractNamedEntity implements DomainObject {
 
 
     private String email;
@@ -18,8 +19,14 @@ public class User extends AbstractNamedEntity {
 
     private Date registered = new Date();
 
+    @OneToMany
     List<Vote> votes;
 
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
     Set<Role> roles;
 
     public User() {

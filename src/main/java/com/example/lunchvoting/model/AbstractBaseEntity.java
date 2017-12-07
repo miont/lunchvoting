@@ -1,16 +1,25 @@
 package com.example.lunchvoting.model;
 
+import javax.persistence.*;
+
 /**
  *  Database entity with id
  */
+@MappedSuperclass
 public abstract class AbstractBaseEntity {
 
-    private Long id;
+    public static final int START_SEQ = 100000;
+
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+//    @Access(value = AccessType.PROPERTY)
+    protected Long id;
 
     public AbstractBaseEntity() {
     }
 
-    public AbstractBaseEntity(Long id) {
+    protected AbstractBaseEntity(Long id) {
         this.id = id;
     }
 

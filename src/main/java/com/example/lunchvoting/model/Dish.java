@@ -7,10 +7,13 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Dish extends AbstractNamedEntity {
+@Table(name = "dishes")
+public class Dish extends AbstractNamedEntity implements DomainObject {
 
     int price;
 
+    @ManyToOne
+    @JoinColumn(name="restaurant_id")
     Restaurant restaurant;
 
     String category;

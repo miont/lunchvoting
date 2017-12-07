@@ -1,16 +1,19 @@
 package com.example.lunchvoting.model;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * Base entity with name
  */
+@MappedSuperclass
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     private String name;
 
-    public AbstractNamedEntity() {
+    protected AbstractNamedEntity() {
     }
 
-    public AbstractNamedEntity(Long id, String name) {
+    protected AbstractNamedEntity(Long id, String name) {
         super(id);
         this.name = name;
     }

@@ -7,15 +7,7 @@ import java.util.List;
 /**
  *
  */
-public interface RestaurantRepository {
-
-    Restaurant save(Restaurant restaurant);
-
-    boolean delete(long id);
-
-    Restaurant get(long id);
-
-    List<Restaurant> getAll();
+public interface RestaurantRepository extends GenericRepository<Restaurant> {
 
     Restaurant getByAddress(String address);
 }

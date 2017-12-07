@@ -1,24 +1,60 @@
 package com.example.lunchvoting.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  *
  */
 @Entity
-public class Restaurant extends AbstractNamedEntity {
+@Table(name = "restaurants")
+public class Restaurant extends AbstractNamedEntity implements DomainObject {
 
     String address;
+
     String url;
+
+    @OneToMany(targetEntity = Dish.class, mappedBy = "restaurant", fetch = FetchType.EAGER)
     List<Dish> menu;
 
     public Restaurant() {
     }
 
-    public Restaurant(String address, String url, List<Dish> menu) {
+    public Restaurant(String name, String address, String url, List<Dish> menu) {
+        this(null, name, address, url, menu);
+    }
+
+    public Restaurant(Long id, String name, String address, String url, List<Dish> menu) {
+        super(null, name);
         this.address = address;
         this.url = url;
+        this.menu = menu;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public List<Dish> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<Dish> menu) {
         this.menu = menu;
     }
 }

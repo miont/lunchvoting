@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "dishes")
-public class Dish extends AbstractNamedEntity implements DomainObject {
+public class Dish extends AbstractNamedEntity {
 
     private int price;
 

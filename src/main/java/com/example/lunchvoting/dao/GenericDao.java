@@ -13,7 +13,7 @@ public interface GenericDao<T extends DomainObject> {
 
     List<T> getAll();
 
-    void save(T object);
+    T save(T object);
 
-    void delete(T object);
+    boolean delete(long id);
 }

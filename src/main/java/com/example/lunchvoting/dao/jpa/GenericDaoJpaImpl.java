@@ -5,6 +5,8 @@ import com.example.lunchvoting.dao.GenericDao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
@@ -37,13 +39,21 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
 
     @Override
     @Transactional
-    public void save(T object) {
-        entityManager.persist(object);
+    public T save(T object) {
+        if(object.isNew()) {
+            entityManager.persist(object);
+            return object;
+        }
+        else {
+            return entityManager.merge(object);
+        }
     }
 
     @Override
     @Transactional
-    public void delete(T object) {
-        entityManager.remove(object);
+    public boolean delete(long id) {
+
+        Query query = entityManager.createQuery("DELETE FROM Person p WHERE p.id = :id");
+        return query.setParameter("id", id).executeUpdate() != 0;
     }
 }

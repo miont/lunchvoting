@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-public class Person extends AbstractBaseEntity implements DomainObject {
+public class Person extends AbstractBaseEntity {
 
     private String username;
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
  *  Database entity with id
  */
 @MappedSuperclass
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements DomainObject {
 
     public static final int START_SEQ = 100000;
 
@@ -31,10 +31,6 @@ public abstract class AbstractBaseEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isNew() {
-        return id == null;
     }
 
 //    @Version

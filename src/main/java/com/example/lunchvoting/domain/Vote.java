@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "votes")
-public class Vote extends AbstractBaseEntity implements DomainObject {
+public class Vote extends AbstractBaseEntity {
 
     @ManyToOne
     private Person person;

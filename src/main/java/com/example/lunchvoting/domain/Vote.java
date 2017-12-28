@@ -1,4 +1,4 @@
-package com.example.lunchvoting.model;
+package com.example.lunchvoting.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Vote extends AbstractBaseEntity implements DomainObject {
 
     @ManyToOne
-    private User user;
+    private Person person;
 
     private Restaurant restaurant;
 
@@ -22,9 +22,9 @@ public class Vote extends AbstractBaseEntity implements DomainObject {
     public Vote() {
     }
 
-    public Vote(Long id, User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(Long id, Person person, Restaurant restaurant, LocalDateTime dateTime) {
         super(id);
-        this.user = user;
+        this.person = person;
         this.restaurant = restaurant;
         this.dateTime = dateTime;
     }

@@ -1,4 +1,4 @@
-package com.example.lunchvoting.model;
+package com.example.lunchvoting.domain;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,14 +10,21 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity implements DomainObject {
+public class Person extends AbstractBaseEntity implements DomainObject {
 
+    private String username;
 
     private String email;
 
     private String password;
 
     private Date registered = new Date();
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @OneToMany
     List<Vote> votes;
@@ -29,15 +36,30 @@ public class User extends AbstractNamedEntity implements DomainObject {
     @ElementCollection(fetch = FetchType.EAGER)
     Set<Role> roles;
 
-    public User() {
+    public Person() {
     }
 
-    public User(Long id, String name, String email, String password, Date registered, Set<Role> roles) {
-        super(id, name);
+    public Person(Long id, String name, String email, String password, Date registered, Set<Role> roles, String firstName, String lastName) {
+        super(id);
+        this.username = name;
         this.email = email;
         this.password = password;
         this.registered = registered;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.roles = roles;
+    }
+
+    public Person(Long id, String name, String email, String password, Date registered, Set<Role> roles) {
+        this(id, name, email, password, registered, roles, "", "");
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -62,6 +84,22 @@ public class User extends AbstractNamedEntity implements DomainObject {
 
     public void setRegistered(Date registered) {
         this.registered = registered;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Vote> getVotes() {

@@ -1,7 +1,7 @@
-package com.example.lunchvoting.repository.jpa;
+package com.example.lunchvoting.dao.jpa;
 
-import com.example.lunchvoting.model.DomainObject;
-import com.example.lunchvoting.repository.GenericRepository;
+import com.example.lunchvoting.domain.DomainObject;
+import com.example.lunchvoting.dao.GenericDao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,14 +13,14 @@ import java.util.List;
  */
 @Transactional(readOnly = true)
 @SuppressWarnings("unchecked")
-public class GenericRepositoryJpaImpl <T extends DomainObject> implements GenericRepository<T> {
+public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> {
 
     private Class<T> type;
 
     @PersistenceContext
     protected EntityManager entityManager;
 
-    public GenericRepositoryJpaImpl(Class<T> type) {
+    public GenericDaoJpaImpl(Class<T> type) {
         this.type = type;
     }
 

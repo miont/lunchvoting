@@ -3,5 +3,6 @@ package com.example.lunchvoting.service;
 /**
  *
  */
-public class UserService {
+public interface PersonService {
+
 }

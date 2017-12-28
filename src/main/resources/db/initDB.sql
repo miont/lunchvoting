@@ -10,13 +10,14 @@ CREATE SEQUENCE global_seq START 100000;
 CREATE TABLE users
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name             VARCHAR                  NOT NULL,
+  username         VARCHAR                  NOT NULL,
+  first_name       VARCHAR                  ,
+  last_name        VARCHAR                  ,
   email            VARCHAR                  NOT NULL,
   password         VARCHAR                  NOT NULL,
-  registered       TIMESTAMP DEFAULT now()  NOT NULL,
-  enabled          BOOL DEFAULT TRUE        NOT NULL
+  registered       TIMESTAMP DEFAULT now()  NOT NULL
 );
-CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
+-- CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_roles
 (
@@ -39,6 +40,5 @@ CREATE TABLE dishes (
   restaurant_id     INTEGER   NOT NULL,
   date_time   TIMESTAMP NOT NULL,
   price    INT       NOT NULL,
-  category    VARCHAR,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );

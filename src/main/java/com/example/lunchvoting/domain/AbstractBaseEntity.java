@@ -1,4 +1,4 @@
-package com.example.lunchvoting.model;
+package com.example.lunchvoting.domain;
 
 import javax.persistence.*;
 
@@ -15,6 +15,8 @@ public abstract class AbstractBaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
 //    @Access(value = AccessType.PROPERTY)
     protected Long id;
+
+//    protected Integer version;
 
     public AbstractBaseEntity() {
     }
@@ -34,6 +36,15 @@ public abstract class AbstractBaseEntity {
     public boolean isNew() {
         return id == null;
     }
+
+//    @Version
+//    public Integer getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion() {
+//        this.version = version;
+//    }
 
     public String toString() {
         return String.format("Entity %s (%d)", getClass().getName(), getId());

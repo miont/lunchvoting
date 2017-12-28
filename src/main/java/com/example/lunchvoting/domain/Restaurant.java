@@ -1,4 +1,4 @@
-package com.example.lunchvoting.model;
+package com.example.lunchvoting.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

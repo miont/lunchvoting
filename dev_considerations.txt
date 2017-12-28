@@ -1,10 +1,10 @@
 Frontend
 
-Autentification with login and password. 2 types of users: regular user, admin.
+Autentification with login and password. 2 types of people: regular person, admin.
 
 User perspective (even guest):
 List of restaurants each as a link with their votes for today and average, maximum (?). Clicking on restaurant shows you lunch menu for today. Its a table of dishes and prices.
-Authorized user can vote for one restaurant. Revoting is allowed before 11 am.
+Authorized person can vote for one restaurant. Revoting is allowed before 11 am.
 
 Admin perspective:
 Can create or delete restaurants
@@ -13,8 +13,14 @@ For each restaurant can append, modify or delete dishes
 Data representation
 
 Relational tables:
-users (id, name, email, password, registered, enabled, roles)
+people (id, name, email, password, registered, enabled, roles)
 user_roles (user_id, role)
 restaurant (id, name, address(?))
 dishes (id, name, price, restaurant_id (foreign key))
 votes (id, date, time, user_id, restaurant_id)
+
+Требования к api:
+- пользователи: создание нового, редактирование, поиск пользователя по id, извлечение всех пользователей или части, удаление пользователя, поиск пользователя по email
+- рестораны: создание, редактирование, извлечение ресторана по id, поиск по названию, поиск по адресу, извлечение ресторана вместе с меню на сегодня и количеством голосов
+- блюда: создание, редактирование, поиск по id, поиск по датам, поиск по названию, удаление
+- голоса: создание, редактирование (если изменен до 11-00), удаление, поиск всех голосов для ресторана с диапазоном дат, поиск для пользователя с диапазоном дат

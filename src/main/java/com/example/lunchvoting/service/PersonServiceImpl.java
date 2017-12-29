@@ -5,6 +5,7 @@ import com.example.lunchvoting.domain.Person;
 import com.example.lunchvoting.util.exception.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  *
  */
+@Service
 public class PersonServiceImpl implements PersonService {
 
     private PersonDao dao;

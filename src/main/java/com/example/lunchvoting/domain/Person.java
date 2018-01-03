@@ -2,6 +2,7 @@ package com.example.lunchvoting.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class Person extends AbstractBaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     List<Vote> votes;
 
 
@@ -39,9 +40,9 @@ public class Person extends AbstractBaseEntity {
     public Person() {
     }
 
-    public Person(Long id, String name, String email, String password, Date registered, Set<Role> roles, String firstName, String lastName) {
+    public Person(Long id, String username, String email, String password, Date registered, String firstName, String lastName, Set<Role> roles) {
         super(id);
-        this.username = name;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.registered = registered;
@@ -50,8 +51,12 @@ public class Person extends AbstractBaseEntity {
         this.roles = roles;
     }
 
-    public Person(Long id, String name, String email, String password, Date registered, Set<Role> roles) {
-        this(id, name, email, password, registered, roles, "", "");
+    public Person(Long id, String username, String email, String password, Date registered, Set<Role> roles) {
+        this(id, username, email, password, registered, null, null, roles);
+    }
+
+    public Person(Long id, String username, String email, String password, String firstName, String lastName, Role role, Role... roles) {
+        this(id, username, email, password, new Date(), firstName, lastName, EnumSet.of(role, roles));
     }
 
     public String getUsername() {

@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.lunchvoting.util.PersonTestData.USER_NEW;
+
 
 /**
  * Testing Person Repository
@@ -36,7 +38,7 @@ public class PersonDaoTest {
 
     @Test
     public void testPerson() {
-        Person newPerson = new Person(null, "BobRoss", "bob@gmail.com", "password", new Date(), Collections.singleton(Role.USER), "Bob", "Ross");
+        Person newPerson = USER_NEW;
         personDao.save(newPerson);
         List<Person> people = personDao.getAll();
         Assert.assertEquals(3, people.size());

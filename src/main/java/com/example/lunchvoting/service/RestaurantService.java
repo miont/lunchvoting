@@ -8,7 +8,6 @@ import java.util.List;
 /**
  *
  */
-@Service
 public interface RestaurantService {
 
     Restaurant create(Restaurant restaurant);

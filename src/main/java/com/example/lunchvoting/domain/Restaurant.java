@@ -20,6 +20,9 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(targetEntity = Dish.class, mappedBy = "restaurant", fetch = FetchType.EAGER)
     List<Dish> menu;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    List<Vote> votes;
+
     public Restaurant() {
     }
 
@@ -56,5 +59,13 @@ public class Restaurant extends AbstractNamedEntity {
 
     public void setMenu(List<Dish> menu) {
         this.menu = menu;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 }

@@ -14,6 +14,8 @@
         <tomcat.version>8.5.20</tomcat.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <jsoup.version>1.10.3</jsoup.version>
+        <jackson-json.version>2.9.1</jackson-json.version>
+        <dozer.version>5.5.1</dozer.version>
 
         <!-- DB -->
         <postgresql.version>42.1.4</postgresql.version>
@@ -24,14 +26,14 @@
         <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
         <javax-el.version>3.0.1-b08</javax-el.version>
 
-        <!--    Tests  -->
+        <!--    Test  -->
         <junit.version>4.12</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
+        <json-path.version>2.3.0</json-path.version>
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
-
 
     </properties>
 
@@ -159,12 +161,32 @@
             <version>6.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer.version}</version>
+        </dependency>
+
 
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -173,6 +195,36 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
+        </dependency>
+
+
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
+
+        <!-- Security -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-test</artifactId>-->
+            <!--<version>${spring-security.version}</version>-->
+        <!--</dependency>-->
 
         <!-- Different -->
         <dependency>
@@ -186,6 +238,7 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>

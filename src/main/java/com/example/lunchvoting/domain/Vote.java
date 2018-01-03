@@ -1,8 +1,6 @@
 package com.example.lunchvoting.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -13,10 +11,14 @@ import java.time.LocalDateTime;
 public class Vote extends AbstractBaseEntity {
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private Person person;
 
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
     public Vote() {
@@ -26,6 +28,30 @@ public class Vote extends AbstractBaseEntity {
         super(id);
         this.person = person;
         this.restaurant = restaurant;
+        this.dateTime = dateTime;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 }

@@ -1,7 +1,12 @@
 package com.example.lunchvoting.web;
 
 import com.example.lunchvoting.domain.Person;
+import com.example.lunchvoting.dto.PersonTo;
 import com.example.lunchvoting.service.PersonService;
+import com.example.lunchvoting.util.mapping.MappingUtil;
+import org.dozer.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +23,25 @@ import java.util.List;
 @RequestMapping(value = PersonRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 // TODO: Different controllers for admin (can get all users, create, update, delete) and regular users
 public class PersonRestController {
-    static final String REST_URL = "api/users";
+    static final String REST_URL = "/api/users";
 
 //    TODO: add logging
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private PersonService service;
 
+    @Autowired
+    Mapper mapper;
+
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person get(@PathVariable("id") long id) {
-        return service.get(id);
+    public PersonTo get(@PathVariable("id") long id) {
+        return mapper.map(service.get(id), PersonTo.class);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> getAll() {
-        return service.getAll();
+    public List<PersonTo> getAll() {
+        return MappingUtil.map(mapper, service.getAll(), PersonTo.class);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

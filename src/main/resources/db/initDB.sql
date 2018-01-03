@@ -42,3 +42,10 @@ CREATE TABLE dishes (
   price    INT       NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
+
+CREATE TABLE votes
+(
+  user_id INTEGER NOT NULL,
+  restaurant_id    INTEGER NOT NULL,
+  date_time   TIMESTAMP NOT NULL
+);

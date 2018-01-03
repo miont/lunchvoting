@@ -3,12 +3,14 @@ package com.example.lunchvoting.service;
 import com.example.lunchvoting.dao.RestaurantDao;
 import com.example.lunchvoting.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  *
  */
+@Service
 public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired

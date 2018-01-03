@@ -42,12 +42,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person getByEmail(String email) throws NotFoundException {
         Assert.notNull(email, "email must not be null");
-        throw new NotImplementedException();
+        Person person = dao.findByEmail(email);
+        if(person == null) {
+            throw new NotFoundException(String.format("Not found person with email = %d", email));
+        }
+        return person;
     }
 
     @Override
     public Person getByUsername(String username) throws NotFoundException {
-        return null;
+        throw new NotImplementedException();
+//        return null;
     }
 
     @Override

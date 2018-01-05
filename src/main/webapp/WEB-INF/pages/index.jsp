@@ -4,34 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title></title>
+    <title>Test Page</title>
 </head>
 <body>
-
-<h4>One list:</h4>
-
-<ol>
-    <li>Red</li>
-    <li>Green</li>
-    <li>Blue
-        <ol><li><strong>one</strong></li>
-            <li><em>two</em></li>
-        </ol>
-    </li>
-</ol>
-
-<h4>Another list:</h4>
-
-<ul>
-    <li>One
-        <ul>
-            <li>e</li>
-            <li>b</li>
-        </ul>
-    </li>
-    <li>Two</li>
-    <li>Three</li>
-</ul>
-
+    <div>
+        <p>Hello there!</p>
+    </div>
 </body>
 </html>

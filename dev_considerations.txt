@@ -24,3 +24,33 @@ votes (id, date, time, user_id, restaurant_id)
 - рестораны: создание, редактирование, извлечение ресторана по id, поиск по названию, поиск по адресу, извлечение ресторана вместе с меню на сегодня и количеством голосов
 - блюда: создание, редактирование, поиск по id, поиск по датам, поиск по названию, удаление
 - голоса: создание, редактирование (если изменен до 11-00), удаление, поиск всех голосов для ресторана с диапазоном дат, поиск для пользователя с диапазоном дат
+
+Security levels
+guest:
+get /restaurants
+
+user:
+get /restaurants/{id}/dishes?fromDate&toDate
+get /users/{current id}
+post /users/{current id}
+put /users/{current id}
+get /users/{current id}/votes
+post /users/{current id}/votes/{id}
+put /users/{current id}/votes/{id}
+delete /users/{current id}/votes/{id}
+
+admin:
+get /users
+get /users/{id}/votes?fromDate&toDate
+get /restaurants/{id}
+post /restaurants/{id}
+put /restaurants/{id}
+delete /restaurants/{id}
+get /restaurants/{id}/dishes/{id}
+post /restaurants/{id}/dishes/{id}
+put /restaurants/{id}/dishes/{id}
+delete /restaurants/{id}/dishes/{id}
+get /restaurants/{id}/votes
+get /restaurants/{id}/votes/stat
+---------------------------------------------------
+

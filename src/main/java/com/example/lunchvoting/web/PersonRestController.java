@@ -1,7 +1,7 @@
 package com.example.lunchvoting.web;
 
 import com.example.lunchvoting.domain.Person;
-import com.example.lunchvoting.dto.PersonTo;
+import com.example.lunchvoting.dto.PersonDto;
 import com.example.lunchvoting.service.PersonService;
 import com.example.lunchvoting.util.mapping.MappingUtil;
 import org.dozer.Mapper;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -23,9 +24,8 @@ import java.util.List;
 @RequestMapping(value = PersonRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 // TODO: Different controllers for admin (can get all users, create, update, delete) and regular users
 public class PersonRestController {
-    static final String REST_URL = "/api/users";
+    static final String REST_URL = "/api/admin/users";
 
-//    TODO: add logging
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -35,27 +35,31 @@ public class PersonRestController {
     Mapper mapper;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonTo get(@PathVariable("id") long id) {
-        return mapper.map(service.get(id), PersonTo.class);
+    public PersonDto get(@PathVariable("id") long id) {
+        return mapper.map(service.get(id), PersonDto.class);
     }
 
+    // Using entity object not DTO
+//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Person get(@PathVariable("id") long id) {
+//        return service.get(id);
+//    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PersonTo> getAll() {
-        return MappingUtil.map(mapper, service.getAll(), PersonTo.class);
+    public List<PersonDto> getAll() {
+        return MappingUtil.map(mapper, service.getAll(), PersonDto.class);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> create(@RequestBody Person person) {
-        if(!person.isNew()) {
-            throw new IllegalArgumentException(person + " is not new");
-        }
-        Person createdPerson = service.create(person);
+    public ResponseEntity<PersonDto> create(@Valid @RequestBody PersonDto personTo) {
+
+        Person createdPerson = service.create(mapper.map(personTo, Person.class));
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(createdPerson.getId()).toUri();
 
-        return ResponseEntity.created(uriOfNewResource).body(createdPerson);
+        return ResponseEntity.created(uriOfNewResource).body(mapper.map(createdPerson, PersonDto.class));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

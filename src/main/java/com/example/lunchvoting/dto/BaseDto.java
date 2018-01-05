@@ -3,7 +3,7 @@ package com.example.lunchvoting.dto;
 /**
  *
  */
-public abstract class BaseTo {
+public abstract class BaseDto {
 
     protected Long id;
 

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  *
  */
-public class PersonTo extends BaseTo {
+public class PersonDto extends BaseDto {
 
     @NotBlank
     @Size(min = 2, max = 20, message = "length must be between 2 and 20 characters")

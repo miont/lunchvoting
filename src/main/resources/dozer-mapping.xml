@@ -12,7 +12,7 @@
 
     <mapping>
         <class-a>com.example.lunchvoting.domain.Person</class-a>
-        <class-b>com.example.lunchvoting.dto.PersonTo</class-b>
+        <class-b>com.example.lunchvoting.dto.PersonDto</class-b>
     </mapping>
 
 </mappings>

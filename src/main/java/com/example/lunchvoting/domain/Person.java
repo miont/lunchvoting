@@ -1,6 +1,9 @@
 package com.example.lunchvoting.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -13,10 +16,16 @@ import java.util.Set;
 @Table(name = "users")
 public class Person extends AbstractBaseEntity {
 
+    @NotBlank
+    @Column(unique = true)
     private String username;
 
+    @Email
+    @NotBlank
+    @Column(unique = true)
     private String email;
 
+    @Size(min = 5, max = 32)
     private String password;
 
     private Date registered = new Date();
@@ -57,6 +66,10 @@ public class Person extends AbstractBaseEntity {
 
     public Person(Long id, String username, String email, String password, String firstName, String lastName, Role role, Role... roles) {
         this(id, username, email, password, new Date(), firstName, lastName, EnumSet.of(role, roles));
+    }
+
+    public Person(Person person) {
+        this(person.id, person.username, person.email, person.password, person.registered, person.firstName, person.lastName, person.roles);
     }
 
     public String getUsername() {

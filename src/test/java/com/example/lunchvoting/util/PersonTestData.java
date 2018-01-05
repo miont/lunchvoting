@@ -19,4 +19,6 @@ public class PersonTestData {
     public static final long NOT_EXISTING_USER_ID = 99;
 
     public static final Person USER_NEW = new Person(null, "bobRoss", "bob@gmail.com", "password", "Bob", "Ross", Role.USER);
+
+    public static final Person USER_INVALID = new Person(null, "", "hello there", "password", "Peter", "Griffin", Role.USER);
 }

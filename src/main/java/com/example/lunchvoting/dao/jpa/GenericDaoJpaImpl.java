@@ -19,8 +19,6 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> {
 
-    Logger log = LoggerFactory.getLogger(getClass());
-
     private Class<T> type;
 
     @PersistenceContext
@@ -37,7 +35,6 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
 
     @Override
     public List<T> getAll() {
-        log.info("getAll");
         return entityManager.createQuery("select obj from " + type.getName() + " obj")
                 .getResultList();
     }
@@ -45,7 +42,6 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
     @Override
     @Transactional
     public T save(T object) {
-        log.info("save");
         if(object.isNew()) {
             entityManager.persist(object);
             return object;

@@ -28,32 +28,10 @@ import javax.annotation.PostConstruct;
 /**
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-mvc.xml",
-        "classpath:spring/spring-db.xml"
-})
-@WebAppConfiguration
-@Transactional
-public class PersonRestControllerTest {
+
+public class PersonRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = PersonRestController.REST_URL + "/";
-
-    private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private Mapper mapper;
-
-    @PostConstruct
-    private void postConstruct() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .build();
-    }
 
     @Test
     public void testGet() throws Exception {

@@ -1,9 +1,11 @@
 package com.example.lunchvoting.dto;
 
+import com.example.lunchvoting.util.HasId;
+
 /**
  *
  */
-public abstract class BaseDto {
+public abstract class BaseDto implements HasId {
 
     protected Long id;
 

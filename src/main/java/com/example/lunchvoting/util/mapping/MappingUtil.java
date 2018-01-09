@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class MappingUtil {
 
-    public static <T, U> List<U> map(final Mapper mapper, final List<T> source, final Class<U> destType) {
+    public static <T, U> List<U> mapList(final Mapper mapper, final List<T> source, final Class<U> destType) {
         final List<U> dest = new ArrayList<>();
             for(T element : source) {
                 dest.add(mapper.map(element, destType));

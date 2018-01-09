@@ -52,3 +52,5 @@ CREATE TABLE votes (
   restaurant_id     BIGINT     NOT NULL,
   date_time         TIMESTAMP  NOT NULL
 );
+CREATE UNIQUE INDEX votes_unique_user_date ON votes(user_id, date_time);
+-- TODO: pobably its better for votes to separate date and time

@@ -1,12 +1,14 @@
 package com.example.lunchvoting.domain;
 
+import com.example.lunchvoting.util.HasId;
+
 import javax.persistence.*;
 
 /**
  *  Database entity with id
  */
 @MappedSuperclass
-public abstract class AbstractBaseEntity implements DomainObject {
+public abstract class AbstractBaseEntity implements DomainObject, HasId {
 
     public static final int START_SEQ = 100000;
 

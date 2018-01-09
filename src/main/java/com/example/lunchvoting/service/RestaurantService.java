@@ -1,6 +1,8 @@
 package com.example.lunchvoting.service;
 
 import com.example.lunchvoting.domain.Restaurant;
+import com.example.lunchvoting.dto.RestaurantDto;
+import com.example.lunchvoting.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,14 +12,14 @@ import java.util.List;
  */
 public interface RestaurantService {
 
-    Restaurant create(Restaurant restaurant);
+    RestaurantDto create(RestaurantDto restaurant);
 
-    Restaurant get(long id);
+    RestaurantDto get(long id) throws NotFoundException;
 
-    List<Restaurant> getAll();
+    List<RestaurantDto> getAll();
 
-    void update(Restaurant restaurant);
+    void update(RestaurantDto restaurant);
 
-    void delete(long id);
+    void delete(long id)  throws NotFoundException;
 
 }

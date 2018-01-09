@@ -14,10 +14,10 @@ Data representation
 
 Relational tables:
 people (id, name, email, password, registered, enabled, roles)
-user_roles (user_id, role)
+user_roles (userId, role)
 restaurant (id, name, address(?))
-dishes (id, name, price, restaurant_id (foreign key))
-votes (id, date, time, user_id, restaurant_id)
+dishes (id, name, price, restaurantId (foreign key))
+votes (id, date, time, userId, restaurantId)
 
 Требования к api:
 - пользователи: создание нового, редактирование, поиск пользователя по id, извлечение всех пользователей или части, удаление пользователя, поиск пользователя по email

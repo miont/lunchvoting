@@ -1,5 +1,8 @@
 package com.example.lunchvoting.domain;
 
+import org.hibernate.annotations.JoinFormula;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -17,7 +20,8 @@ public class Restaurant extends AbstractNamedEntity {
 
     String url;
 
-    @OneToMany(targetEntity = Dish.class, mappedBy = "restaurant", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Dish.class, mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @Where(clause = "date = today()")
     List<Dish> menu;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")

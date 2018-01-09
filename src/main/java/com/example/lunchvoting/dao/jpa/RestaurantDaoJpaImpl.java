@@ -2,7 +2,11 @@ package com.example.lunchvoting.dao.jpa;
 
 import com.example.lunchvoting.dao.RestaurantDao;
 import com.example.lunchvoting.domain.Restaurant;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -16,6 +20,10 @@ public class RestaurantDaoJpaImpl extends GenericDaoJpaImpl<Restaurant> implemen
 
     @Override
     public Restaurant getByAddress(String address) {
-        return null;
+
+        Query query = entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant WHERE restaurant.address = :address");
+        List<Restaurant> restaurants = query.setParameter("address", address).getResultList();
+
+        return DataAccessUtils.singleResult(restaurants);
     }
 }

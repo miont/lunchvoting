@@ -21,10 +21,10 @@
 --
 -- CREATE TABLE user_roles
 -- (
---   user_id INTEGER NOT NULL,
+--   userId INTEGER NOT NULL,
 --   role    VARCHAR,
---   CONSTRAINT user_roles_idx UNIQUE (user_id, role),
---   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+--   CONSTRAINT user_roles_idx UNIQUE (userId, role),
+--   FOREIGN KEY (userId) REFERENCES users (id) ON DELETE CASCADE
 -- );
 --
 -- CREATE TABLE restaurants (
@@ -37,15 +37,15 @@
 -- CREATE TABLE dishes (
 --   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
 --   title       VARCHAR         NOT NULL,
---   restaurant_id     INTEGER   NOT NULL,
+--   restaurantId     INTEGER   NOT NULL,
 --   date_time   TIMESTAMP NOT NULL,
 --   price    INT       NOT NULL,
---   FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
+--   FOREIGN KEY (restaurantId) REFERENCES restaurants (id) ON DELETE CASCADE
 -- );
 --
 -- CREATE TABLE votes
 -- (
---   user_id INTEGER NOT NULL,
---   restaurant_id    INTEGER NOT NULL,
+--   userId INTEGER NOT NULL,
+--   restaurantId    INTEGER NOT NULL,
 --   date_time   TIMESTAMP NOT NULL
 -- );

@@ -47,7 +47,7 @@ public class PersonRestController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonDto> getAll() {
-        return MappingUtil.map(mapper, service.getAll(), PersonDto.class);
+        return MappingUtil.mapList(mapper, service.getAll(), PersonDto.class);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

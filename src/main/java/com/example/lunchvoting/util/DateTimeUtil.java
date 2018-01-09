@@ -14,4 +14,9 @@ public class DateTimeUtil {
 
     private DateTimeUtil() {
     }
+
+    public static void correctDatesIfNull(LocalDate startDate, LocalDate endDate) {
+        if(startDate == null) startDate = MIN_DATE;
+        if(endDate == null) endDate = MAX_DATE;
+    }
 }

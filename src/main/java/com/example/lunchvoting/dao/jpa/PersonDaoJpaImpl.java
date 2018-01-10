@@ -17,10 +17,17 @@ public class PersonDaoJpaImpl extends GenericDaoJpaImpl<Person> implements Perso
     }
 
     @Override
-    public Person findByEmail(String email) {
+    public Person getByEmail(String email) {
         Query query = entityManager.createQuery("select person from Person person where person.email = :email");
         query.setParameter("email", email);
         Person person = (Person) query.getSingleResult();
         return person;
+    }
+
+    @Override
+    public Person getByUsername(String username) {
+        Query query = entityManager.createQuery("select person from Person person where person.username = :username");
+        query.setParameter("username", username);
+        return (Person)query.getSingleResult();
     }
 }

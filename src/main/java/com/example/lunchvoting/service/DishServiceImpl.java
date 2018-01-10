@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class DishServiceImpl implements DishService {
     }
 
 
+    @Transactional
     @Override
     public DishDto create(DishDto dish, long restaurantId) {
         Assert.notNull(dish, "dish must not be null");
@@ -57,12 +59,14 @@ public class DishServiceImpl implements DishService {
                 DishDto.class);
     }
 
+    @Transactional
     @Override
     public void update(DishDto dish, long restaurantId) throws NotFoundException {
         Assert.notNull(dish, "dish must not be null");
         checkNotFoundWithId(dao.save(mapper.map(dish, Dish.class), restaurantId), dish.getId());
     }
 
+    @Transactional
     @Override
     public void delete(long id, long restaurantId) throws NotFoundException {
         checkNotFoundWithId(dao.delete(id, restaurantId), id);

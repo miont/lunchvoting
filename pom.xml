@@ -183,6 +183,12 @@
             <version>${dozer.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.craftsman</groupId>
+            <artifactId>dozer-jdk8-support</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
         <!-- Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>

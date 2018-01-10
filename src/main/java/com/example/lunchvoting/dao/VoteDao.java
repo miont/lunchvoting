@@ -8,7 +8,7 @@ import java.util.List;
 /**
  *
  */
-public interface VoteDao {
+public interface VoteDao extends GenericDao<Vote> {
 
     public Vote save(Vote vote, long userId, long restaurantId);
 

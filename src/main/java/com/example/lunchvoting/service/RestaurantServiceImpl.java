@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static com.example.lunchvoting.util.ValidationUtil.*;
@@ -33,6 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private Mapper mapper;
 
+    @Transactional
     @Override
     public RestaurantDto create(RestaurantDto restaurant) {
         Assert.notNull(restaurant, "restaurant argument should be not null");
@@ -67,12 +69,14 @@ public class RestaurantServiceImpl implements RestaurantService {
         return MappingUtil.mapList(mapper, restaurants, RestaurantDto.class); // TODO: probably doesn't work with menu
     }
 
+    @Transactional
     @Override
     public void update(RestaurantDto restaurant) {
         Assert.notNull(restaurant, "argument must not be null");
         restaurantDao.save(mapper.map(restaurant, Restaurant.class));
     }
 
+    @Transactional
     @Override
     public void delete(long id) {
         checkNotFoundWithId(restaurantDao.delete(id), id);

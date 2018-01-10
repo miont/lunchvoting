@@ -1,0 +1,39 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http pattern="/api/**" use-expressions="true" name="restSecurityFilterChain">
+        <http-basic/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <http>
+        <intercept-url pattern="/login" access="isAnonymous()"/>
+        <intercept-url pattern="/register" access="isAnonymous()"/>
+        <intercept-url pattern="/api/restaurants" method="GET" access="isAnonymous()"/>
+        <intercept-url pattern="/api/restaurants/**/dishes" method="GET" access="isAnonymous()"/>
+
+        <intercept-url pattern="/**/users/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/api/**/votes" access="hasRole('USER')"/>
+        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+
+        <form-login login-page="/login" default-target-url="/api/restaurants"
+                    authentication-failure-url="/login?error=true"
+                    login-processing-url="/spring_security_check"/>
+        <logout logout-success-url="/login"/>
+    </http>
+
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="casualNerd" password="321" authorities="USER"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>

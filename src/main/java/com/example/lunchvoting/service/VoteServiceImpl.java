@@ -9,6 +9,7 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -27,19 +28,26 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     Mapper mapper;
 
+    @Transactional
     @Override
     public VoteDto makeVote(long userId, long restaurantId) {
         Vote vote = new Vote();
         VoteDto voteDto = new VoteDto();
-        if(vote.getTime().isBefore(LIMIT_VOTE_TIME)) {
+        // Check if there was already vote from this user on current date
+        Vote existedVote = dao.getForUserOnDate(userId, vote.getDate());
+        if(existedVote == null || vote.getTime().isBefore(LIMIT_VOTE_TIME)) {
+            if(existedVote != null) {
+                dao.delete(existedVote.getId());
+            }
             vote = dao.save(vote, userId, restaurantId);
             voteDto = mapper.map(vote, VoteDto.class);
         }
         else {
             // prepare DTO with unsuccess flag
-            voteDto.setDateTime(vote.getDateTime());
             voteDto.setUserId(userId);
             voteDto.setRestaurantId(restaurantId);
+            voteDto.setDate(vote.getDate());
+            voteDto.setTime(vote.getTime());
             voteDto.setSuccessfull(false);
         }
         return voteDto;

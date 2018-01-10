@@ -8,6 +8,21 @@
         <stop-on-errors>true</stop-on-errors>
         <date-format>dd/MM/yyyy HH:mm</date-format>
         <wildcard>true</wildcard>
+
+        <custom-converters>
+            <converter type="io.craftsman.Jdk8CompatibilityConverter">
+                <class-a>java.time.LocalDate</class-a>
+                <class-b>java.time.LocalDate</class-b>
+            </converter>
+            <converter type="io.craftsman.Jdk8CompatibilityConverter">
+                <class-a>java.time.LocalTime</class-a>
+                <class-b>java.time.LocalTime</class-b>
+            </converter>
+            <converter type="io.craftsman.Jdk8CompatibilityConverter">
+                <class-a>java.time.LocalDateTime</class-a>
+                <class-b>java.time.LocalDateTime</class-b>
+            </converter>
+        </custom-converters>
     </configuration>
 
     <mapping>
@@ -15,4 +30,26 @@
         <class-b>com.example.lunchvoting.dto.PersonDto</class-b>
     </mapping>
 
+    <mapping>
+        <class-a>com.example.lunchvoting.domain.Restaurant</class-a>
+        <class-b>com.example.lunchvoting.dto.RestaurantDto</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>com.example.lunchvoting.domain.Dish</class-a>
+        <class-b>com.example.lunchvoting.dto.DishDto</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>com.example.lunchvoting.domain.Vote</class-a>
+        <class-b>com.example.lunchvoting.dto.VoteDto</class-b>
+        <field>
+            <a>restaurant.id</a>
+            <b>restaurantId</b>
+        </field>
+        <field>
+            <a>person.id</a>
+            <b>userId</b>
+        </field>
+    </mapping>
 </mappings>

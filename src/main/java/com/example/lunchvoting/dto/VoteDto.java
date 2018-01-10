@@ -1,6 +1,8 @@
 package com.example.lunchvoting.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  *
@@ -11,7 +13,8 @@ public class VoteDto extends BaseDto {
 
     private long restaurantId;
 
-    private LocalDateTime dateTime;
+    private LocalDate date;
+    private LocalTime time;
 
     private boolean successfull = true;
 
@@ -31,12 +34,20 @@ public class VoteDto extends BaseDto {
         this.restaurantId = restaurantId;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public boolean isSuccessfull() {

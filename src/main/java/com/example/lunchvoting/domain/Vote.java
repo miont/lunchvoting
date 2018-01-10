@@ -9,9 +9,9 @@ import java.time.LocalTime;
  *
  */
 @NamedQueries({
-        @NamedQuery(name = Vote.GET_FOR_USER_ON_DATE, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.dateTime = :date"),
-        @NamedQuery(name = Vote.ALL_FOR_RESTAURANT, query = "SELECT vote FROM Vote vote WHERE vote.restaurant.id = :restaurantId AND vote.dateTime BETWEEN :startDate AND :endDate"),
-        @NamedQuery(name = Vote.ALL_FOR_USER, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.dateTime BETWEEN :startDate AND :endDate")
+        @NamedQuery(name = Vote.GET_FOR_USER_ON_DATE, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.date = :date"),
+        @NamedQuery(name = Vote.ALL_FOR_RESTAURANT, query = "SELECT vote FROM Vote vote WHERE vote.restaurant.id = :restaurantId AND vote.date BETWEEN :startDate AND :endDate"),
+        @NamedQuery(name = Vote.ALL_FOR_USER, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.date BETWEEN :startDate AND :endDate")
 })
 
 @Entity
@@ -30,8 +30,11 @@ public class Vote extends AbstractBaseEntity {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @Column(name = "date_time")
-    private LocalDateTime dateTime = LocalDateTime.now();
+    @Column(name = "date")
+    private LocalDate date = LocalDate.now();
+
+    @Column(name = "time")
+    private LocalTime time = LocalTime.now();
 
     public Vote() {
     }
@@ -40,7 +43,8 @@ public class Vote extends AbstractBaseEntity {
         super(id);
         this.person = person;
         this.restaurant = restaurant;
-        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
+        this.time = dateTime.toLocalTime();
     }
 
     public Person getPerson() {
@@ -59,19 +63,19 @@ public class Vote extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public LocalDate getDate() {
-        return dateTime.toLocalDate();
+        return date;
     }
 
     public LocalTime getTime() {
-        return dateTime.toLocalTime();
+        return time;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

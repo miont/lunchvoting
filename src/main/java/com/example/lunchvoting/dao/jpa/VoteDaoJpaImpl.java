@@ -30,14 +30,13 @@ public class VoteDaoJpaImpl extends GenericDaoJpaImpl<Vote> implements VoteDao {
         Assert.notNull(vote, getArgumentIsNullMsg("vote"));
         vote.setPerson(entityManager.getReference(Person.class, userId));
         vote.setRestaurant(entityManager.getReference(Restaurant.class, restaurantId));
-        // Check if there was already vote from this user on current date
-        Vote existedVote = getForUserOnDate(userId, vote.getDate());
-        if(existedVote != null) {
-            // then delete old one
-            delete(existedVote.getId());
+        if(vote.isNew()) {
+            entityManager.persist(vote);
+            return vote;
         }
-        entityManager.persist(vote);
-        return vote;
+        else {
+            return entityManager.merge(vote);
+        }
     }
 
     @Override

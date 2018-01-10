@@ -1,17 +1,18 @@
 package com.example.lunchvoting.domain;
 
-import org.hibernate.annotations.JoinFormula;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
 /**
  *
  */
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractNamedEntity {

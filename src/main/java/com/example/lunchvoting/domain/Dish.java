@@ -1,10 +1,16 @@
 package com.example.lunchvoting.domain;
 
 import com.example.lunchvoting.util.DateTimeUtil;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -17,7 +23,8 @@ import java.time.LocalDate;
         @NamedQuery(name = Dish.ALL_FOR_RESTAURANT, query = "SELECT dish FROM Dish dish WHERE dish.restaurant.id = :restaurantId AND dish.date BETWEEN :startDate AND :endDate ORDER BY dish.name"),
         @NamedQuery(name=Dish.DELETE, query = "DELETE FROM Dish dish WHERE dish.id = :id AND dish.restaurant.id = :restaurantId")
 })
-
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "dishes")
 public class Dish extends AbstractNamedEntity {

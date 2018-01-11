@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,32 +26,27 @@ public class AuthorizedPerson extends org.springframework.security.core.userdeta
     public AuthorizedPerson(Person person) {
         super(person.getUsername(), person.getPassword(), person.getRoles());
         this.personDto = MappingUtil.getMapper().map(person, PersonDto.class);
-//        this.personDto = new PersonDto();
-//        this.personDto.setUsername(person.getUsername());
-//        this.personDto.setPassword(person.getPassword());
-//        this.personDto.setRoles(person.getRoles());
-//        this.personDto.setId(1L);
-
     }
 
-    public static AuthorizedPerson safeGet() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null) return null;
-        Object principal = auth.getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
-        Person person = new Person(1L, userDetails.getUsername(), null, "54321", null, EnumSet.of(Role.USER));
-        return new AuthorizedPerson(person);
+//    public static AuthorizedPerson safeGet() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if(auth == null) return null;
+//        Object principal = auth.getPrincipal();
 //        return principal instanceof AuthorizedPerson ? (AuthorizedPerson)principal : null;
-    }
+//    }
+//
+//    public static AuthorizedPerson get() {
+//        AuthorizedPerson person = safeGet();
+//        Objects.requireNonNull(person, "no authorized user found");
+//        return person;
+//    }
+//
+//    public static long id() {
+//        return get().personDto.getId();
+//    }
 
-    public static AuthorizedPerson get() {
-        AuthorizedPerson person = safeGet();
-        Objects.requireNonNull(person, "no authorized user found");
-        return person;
-    }
-
-    public static long id() {
-        return get().personDto.getId();
+    public long id() {
+        return personDto.getId();
     }
 
     public PersonDto getPersonDto() {

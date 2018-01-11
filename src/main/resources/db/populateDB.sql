@@ -4,10 +4,10 @@ DELETE FROM users;
 
 -- Users
 INSERT INTO users (username, email, password, first_name, last_name)
-VALUES ('bigBoss', 'realchuck@gmail.com', '12345', 'Chuck', 'Norris');
+VALUES ('bigboss', 'realchuck@gmail.com', '$2a$10$FuaITg3NDcVwL4/t7cg6WOF/vNsLPLfnf6DHwNJQoCFOQwvAcCHai', 'Chuck', 'Norris');
 
 INSERT INTO users (username, email, password, first_name, last_name)
-VALUES ('casualNerd', 'tommy@gmail.com', '54321', 'Tom', 'Smith');
+VALUES ('casualnerd', 'tommy@gmail.com', '$2a$10$H/Z8SdyvI.jDqNP9Gtd0LOGAkgQ5eYjf8JfSwKAbPQrprVLtf.41O', 'Tom', 'Smith');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('USER',  1),

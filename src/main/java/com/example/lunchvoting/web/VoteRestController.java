@@ -6,6 +6,7 @@ import com.example.lunchvoting.service.VoteService;
 import com.example.lunchvoting.util.RestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,9 +25,9 @@ public class VoteRestController {
     @Autowired
     VoteService service;
 
-    @PostMapping(value = RestaurantRestController.REST_URL + "{id}/votes")
-    public VoteDto makeVote(@PathVariable(name = "id") long restaurantId) {
-        return service.makeVote(AuthorizedPerson.id(), restaurantId);
+    @PostMapping(value = RestaurantRestController.REST_URL + "/{id}/votes")
+    public VoteDto makeVote(@PathVariable(name = "id") long restaurantId, @AuthenticationPrincipal AuthorizedPerson authorizedPerson) {
+        return service.makeVote(authorizedPerson.id(), restaurantId);
     }
 
     @GetMapping(value = RestaurantRestController.REST_URL + "{id}/votes")

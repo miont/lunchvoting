@@ -18,7 +18,7 @@
         <intercept-url pattern="/api/restaurants" method="GET" access="isAnonymous()"/>
         <intercept-url pattern="/api/restaurants/**/dishes" method="GET" access="isAnonymous()"/>
 
-        <intercept-url pattern="/**/users/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/api/**/users/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/api/**/votes" access="hasRole('USER')"/>
         <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
 
@@ -28,12 +28,14 @@
         <logout logout-success-url="/login"/>
     </http>
 
+    <beans:bean class="com.example.lunchvoting.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"></beans:bean>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="casualNerd" password="321" authorities="USER"/>
-            </user-service>
+        <authentication-provider user-service-ref="personService">
+            <password-encoder ref="passwordEncoder"></password-encoder>
+            <!--<user-service >-->
+                <!--<user name="casualNerd" password="321" authorities="USER"/>-->
+            <!--</user-service>-->
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

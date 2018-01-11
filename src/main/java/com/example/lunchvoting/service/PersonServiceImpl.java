@@ -82,7 +82,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 
     @Override
     public AuthorizedPerson loadUserByUsername(String username) throws UsernameNotFoundException {
-        Person person = dao.getByUsername(username);  // Make username case insensitive
+        Person person = dao.getByUsername(username);  // TODO: Make username case insensitive
         if(person == null) throw new UsernameNotFoundException("User" + username + "not found");
         return new AuthorizedPerson(person);
     }

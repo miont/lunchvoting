@@ -1,6 +1,7 @@
 package com.example.lunchvoting.service;
 
 import com.example.lunchvoting.domain.Person;
+import com.example.lunchvoting.dto.PersonDto;
 import com.example.lunchvoting.util.exception.NotFoundException;
 
 import java.util.List;
@@ -10,20 +11,19 @@ import java.util.List;
  */
 public interface PersonService {
 
-    Person create(Person person);
+    PersonDto create(PersonDto person);
 
-    Person get(long id) throws NotFoundException;
+    PersonDto get(long id) throws NotFoundException;
 
-    Person getByEmail(String email) throws NotFoundException;
+    PersonDto getByEmail(String email) throws NotFoundException;
 
-    Person getByUsername(String username) throws NotFoundException;
+    PersonDto getByUsername(String username) throws NotFoundException;
 
-    List<Person> getAll();
+    List<PersonDto> getAll();
 
     // TODO: pagination
-    // TODO: getAll between dates
 
-    void update(Person person);
+    void update(PersonDto person);
 
     void delete(long id) throws NotFoundException;
 }

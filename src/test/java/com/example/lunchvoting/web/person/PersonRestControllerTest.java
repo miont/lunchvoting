@@ -1,21 +1,11 @@
-package com.example.lunchvoting.web;
+package com.example.lunchvoting.web.person;
 
 import com.example.lunchvoting.domain.Person;
 import com.example.lunchvoting.dto.PersonDto;
+import com.example.lunchvoting.web.AbstractControllerTest;
 import com.example.lunchvoting.web.json.JsonUtil;
-import org.dozer.Mapper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import static com.example.lunchvoting.util.PersonTestData.*;
 import static com.example.lunchvoting.util.TestUtil.personHttpBasic;
@@ -23,9 +13,6 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-
-import javax.annotation.PostConstruct;
 
 /**
  *
@@ -38,7 +25,7 @@ public class PersonRestControllerTest extends AbstractControllerTest {
     @Test
     public void testGet() throws Exception {
         mockMvc.perform(get(REST_URL + USER1_ID)
-                .with(personHttpBasic(USER_EXAMPLE)))
+                .with(personHttpBasic(ADMIN_EXAMPLE)))
         .andExpect(status().isOk())
         .andDo(print())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -51,14 +38,16 @@ public class PersonRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetNotFound() throws Exception {
-        mockMvc.perform(get(REST_URL + NOT_EXISTING_USER_ID))
+        mockMvc.perform(get(REST_URL + NOT_EXISTING_USER_ID)
+                .with(personHttpBasic(ADMIN_EXAMPLE)))
                 .andExpect(status().isNotFound())
                 .andDo(print());
     }
 
     @Test
     public void TestGetByEmail() throws Exception {
-        mockMvc.perform(get(REST_URL + "by?email=", USER1.getEmail()))
+        mockMvc.perform(get(REST_URL + "by?email=", USER1.getEmail())
+                .with(personHttpBasic(ADMIN_EXAMPLE)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.username", is(USER1.getUsername())))
@@ -69,7 +58,8 @@ public class PersonRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL)
+                .with(personHttpBasic(ADMIN_EXAMPLE)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -86,6 +76,7 @@ public class PersonRestControllerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
         mockMvc.perform(post(REST_URL)
+                .with(personHttpBasic(ADMIN_EXAMPLE))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(mapper.map(USER_NEW, PersonDto.class))))
                 .andExpect(status().isCreated())
@@ -100,6 +91,7 @@ public class PersonRestControllerTest extends AbstractControllerTest {
     @Test
     public void testCreateInvalid() throws Exception {
         mockMvc.perform(post(REST_URL)
+                .with(personHttpBasic(ADMIN_EXAMPLE))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(mapper.map(USER_INVALID, PersonDto.class))))
                 .andExpect(status().isUnprocessableEntity())
@@ -110,6 +102,7 @@ public class PersonRestControllerTest extends AbstractControllerTest {
     public void testUpdate() throws Exception {
         Person updatedUser = new Person(USER2);
         mockMvc.perform(put(REST_URL + USER2_ID)
+                .with(personHttpBasic(ADMIN_EXAMPLE))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(mapper.map(updatedUser, PersonDto.class))))
                 .andExpect(status().isOk())
@@ -121,7 +114,8 @@ public class PersonRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + USER1_ID))
+        mockMvc.perform(delete(REST_URL + USER1_ID)
+                .with(personHttpBasic(ADMIN_EXAMPLE)))
                 .andDo(print())
                 .andExpect(status().isOk());
         // TODO: check remaining users

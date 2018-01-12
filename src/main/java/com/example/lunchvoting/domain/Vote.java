@@ -11,7 +11,8 @@ import java.time.LocalTime;
 @NamedQueries({
         @NamedQuery(name = Vote.GET_FOR_USER_ON_DATE, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.date = :date"),
         @NamedQuery(name = Vote.ALL_FOR_RESTAURANT, query = "SELECT vote FROM Vote vote WHERE vote.restaurant.id = :restaurantId AND vote.date BETWEEN :startDate AND :endDate"),
-        @NamedQuery(name = Vote.ALL_FOR_USER, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.date BETWEEN :startDate AND :endDate")
+        @NamedQuery(name = Vote.ALL_FOR_USER, query = "SELECT vote FROM Vote vote WHERE vote.person.id = :personId AND vote.date BETWEEN :startDate AND :endDate"),
+        @NamedQuery(name = Vote.COUNT_FOR_RESTAURANT_ON_DATE, query = "SELECT count(vote) FROM Vote vote WHERE vote.restaurant.id = :restaurantId AND vote.date = :date")
 })
 
 @Entity
@@ -21,6 +22,7 @@ public class Vote extends AbstractBaseEntity {
     public static final String GET_FOR_USER_ON_DATE = "Vote.getForUserOnDate";
     public static final String ALL_FOR_RESTAURANT = "Vote.getAllForRestaurant";
     public static final String ALL_FOR_USER = "Vote.getAllForUser";
+    public static final String COUNT_FOR_RESTAURANT_ON_DATE = "Vote.getCountForRestaurantOnDate";
 
     @ManyToOne
     @JoinColumn(name = "user_id")

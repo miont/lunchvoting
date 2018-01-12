@@ -20,7 +20,7 @@ public class RestaurantDto extends BaseDto {
 
     List<DishDto> menu;
 
-    int votesTodayCount;
+    long votesTodayCount;
 
     public RestaurantDto() {
     }
@@ -57,11 +57,11 @@ public class RestaurantDto extends BaseDto {
         this.menu = menu;
     }
 
-    public int getVotesTodayCount() {
+    public long getVotesTodayCount() {
         return votesTodayCount;
     }
 
-    public void setVotesTodayCount(int votesTodayCount) {
+    public void setVotesTodayCount(long votesTodayCount) {
         this.votesTodayCount = votesTodayCount;
     }
 }

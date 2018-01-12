@@ -42,10 +42,16 @@ INSERT INTO dishes (name, price, restaurant_id, date)
 VALUES ('Curry Shrimp', 2700, 1, CURRENT_DATE);
 
 INSERT INTO dishes (name, price, restaurant_id, date)
-VALUES ('Fettuccine Alfredo', 1095, 2, '2018-01-08');
+VALUES ('Fettuccine Alfredo', 1095, 2, CURRENT_DATE);
 
 INSERT INTO dishes (name, price, restaurant_id, date)
-VALUES ('Broiled Half Chicken Dinner', 950, 2, '2018-01-08');
+VALUES ('Broiled Half Chicken Dinner', 950, 2, CURRENT_DATE);
 
 INSERT INTO dishes (name, price, restaurant_id, date)
-VALUES ('San Pellegrino', 195, 2, '2018-01-08');
+VALUES ('San Pellegrino', 195, 2, CURRENT_DATE);
+
+INSERT INTO votes (user_id, restaurant_id, date, time)
+VALUES (1, 1, CURRENT_DATE, '08:00:00');
+
+INSERT INTO votes (user_id, restaurant_id, date, time)
+VALUES (2, 1, CURRENT_DATE, '10:00:00');

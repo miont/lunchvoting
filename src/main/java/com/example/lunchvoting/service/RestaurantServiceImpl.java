@@ -2,6 +2,7 @@ package com.example.lunchvoting.service;
 
 import com.example.lunchvoting.dao.DishDao;
 import com.example.lunchvoting.dao.RestaurantDao;
+import com.example.lunchvoting.dao.VoteDao;
 import com.example.lunchvoting.domain.Restaurant;
 import com.example.lunchvoting.dto.RestaurantDto;
 import com.example.lunchvoting.util.exception.NotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.lunchvoting.util.ValidationUtil.*;
@@ -27,6 +29,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired
     private DishDao dishDao;
+
+    @Autowired
+    private VoteDao voteDao;
 
     @Autowired
     private DishService dishService;
@@ -53,7 +58,10 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurant.setMenu(dishService.getTodayMenu(id));
         }
 
-        return mapper.map(restaurant, RestaurantDto.class); // TODO: probably doesn't work with menu
+        RestaurantDto restaurantDto = mapper.map(restaurant, RestaurantDto.class); // TODO: probably doesn't work with menu
+        restaurantDto.setVotesTodayCount(getTodayVotesCount(id));
+
+        return restaurantDto;
     }
 
     @Override
@@ -80,5 +88,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void delete(long id) {
         checkNotFoundWithId(restaurantDao.delete(id), id);
+    }
+
+
+    public long getTodayVotesCount(long id) {
+        Long count = voteDao.getCountForRestaurantOnDate(id, LocalDate.now());
+        if(count == null) throw new RuntimeException("Error during counting votes for restaurant");
+        return count;
     }
 }

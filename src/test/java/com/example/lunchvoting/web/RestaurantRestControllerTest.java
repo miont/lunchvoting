@@ -3,8 +3,10 @@ package com.example.lunchvoting.web;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import static com.example.lunchvoting.util.PersonTestData.USER2;
 import static com.example.lunchvoting.util.RestaurantTestData.RESTAURANT1;
 import static com.example.lunchvoting.util.RestaurantTestData.RESTAURANT1_ID;
+import static com.example.lunchvoting.util.TestUtil.personHttpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -20,7 +22,8 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + RESTAURANT1_ID))
+        mockMvc.perform(get(REST_URL + RESTAURANT1_ID)
+                .with(personHttpBasic(USER2)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

@@ -18,4 +18,6 @@ public interface VoteDao extends GenericDao<Vote> {
 
     public List<Vote> getAllForUser(long userId, LocalDate startDate, LocalDate endDate);
 
+    Long getCountForRestaurantOnDate(long restaurantId, LocalDate date);
+
 }

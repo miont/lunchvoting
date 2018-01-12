@@ -66,4 +66,13 @@ public class VoteDaoJpaImpl extends GenericDaoJpaImpl<Vote> implements VoteDao {
                 .setParameter("endDate", endDate)
                 .getResultList();
     }
+
+    @Override
+    public Long getCountForRestaurantOnDate(long restaurantId, LocalDate date) {
+        Query query = entityManager.createNamedQuery(Vote.COUNT_FOR_RESTAURANT_ON_DATE)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("date", date);
+        Object result = query.getSingleResult();
+        return result instanceof Long ? (Long) result : null;
+    }
 }

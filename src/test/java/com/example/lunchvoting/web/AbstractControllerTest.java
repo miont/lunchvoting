@@ -26,7 +26,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 })
 @WebAppConfiguration
 @Transactional
-public class AbstractControllerTest {
+public abstract class AbstractControllerTest {
 
     protected MockMvc mockMvc;
 

@@ -1,6 +1,7 @@
 package com.example.lunchvoting.dto;
 
 import com.example.lunchvoting.domain.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.*;
 import java.util.Set;
@@ -19,13 +20,26 @@ public class PersonDto extends BaseDto {
     private String email;
 
     @Size(min = 5, max = 32, message = "length must between 5 and 32 characters")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String firstName;
 
     private String lastName;
 
-    Set<Role> roles;
+    private Set<Role> roles;
+
+    public PersonDto(){}
+
+    public PersonDto(Long id, String username, String email,  String password, String firstName, String lastName, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+    }
 
     public String getUsername() {
         return username;

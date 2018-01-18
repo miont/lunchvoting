@@ -5,6 +5,7 @@ import com.example.lunchvoting.dao.PersonDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -14,6 +15,12 @@ public class PersonDaoJpaImpl extends GenericDaoJpaImpl<Person> implements Perso
 
     public PersonDaoJpaImpl() {
         super(Person.class);
+    }
+
+    @Override
+    public List<Person> getAll() {
+        return entityManager.createNamedQuery(Person.ALL_SORTED, Person.class)
+                .getResultList();
     }
 
     @Override

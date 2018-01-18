@@ -18,4 +18,13 @@
           p:configLocation="classpath:cache/ehcache.xml"
           p:shared="true"/>
 
+    <!-- Mapping Domain Objects To DTO -->
+    <bean class="org.dozer.DozerBeanMapper">
+        <property name="mappingFiles">
+            <list>
+                <value>dozer-mapping.xml</value>
+            </list>
+        </property>
+    </bean>
+
 </beans>

@@ -8,18 +8,23 @@
 
     <http pattern="/api/**" use-expressions="true" name="restSecurityFilterChain">
         <http-basic/>
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
-        <csrf disabled="true"/>
+        <intercept-url pattern="/api/admin/**" access="hasAuthority('ADMIN')"/>
+        <intercept-url pattern="/api/profile/**" access="isAuthenticated()"/>
+        <!--<intercept-url pattern="/**" access="hasRole('ADMIN')"/>-->
+        <!--&lt;!&ndash;<intercept-url pattern="/api/profile/**" access="isAuthenticated()"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<intercept-url pattern="/api/restaurants/**/votes/**" access="isAuthenticated()"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<intercept-url pattern="/api/restaurants/**" access="isAnonymous()"/>&ndash;&gt;-->
+        <!--<csrf disabled="true"/>-->
     </http>
 
     <http>
-        <intercept-url pattern="/login" access="isAnonymous()"/>
-        <intercept-url pattern="/register" access="isAnonymous()"/>
-        <intercept-url pattern="/api/restaurants" method="GET" access="isAnonymous()"/>
-        <intercept-url pattern="/api/restaurants/**/dishes" method="GET" access="isAnonymous()"/>
+        <!--<intercept-url pattern="/api/admin/users/**" access="hasAuthority('ADMIN')"/>-->
+        <!--<intercept-url pattern="/login" access="isAnonymous()"/>-->
+        <!--<intercept-url pattern="/register" access="isAnonymous()"/>-->
+        <!--<intercept-url pattern="/api/restaurants" method="GET" access="isAnonymous()"/>-->
+        <!--<intercept-url pattern="/api/restaurants/**/dishes" method="GET" access="isAnonymous()"/>-->
 
-        <intercept-url pattern="/api/**/users/**" access="hasRole('ADMIN')"/>
-        <intercept-url pattern="/api/**/votes" access="hasRole('USER')"/>
+        <!--<intercept-url pattern="/api/**/votes" access="hasRole('USER')"/>-->
         <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
 
         <form-login login-page="/login" default-target-url="/api/restaurants"

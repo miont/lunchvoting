@@ -8,6 +8,8 @@ import com.example.lunchvoting.util.exception.NotFoundException;
 import com.example.lunchvoting.util.mapping.MappingUtil;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -36,20 +38,23 @@ public class DishServiceImpl implements DishService {
                 DishDto.class);
     }
 
+    @Cacheable("dishes")
     @Override
     public List<DishDto> getAll(long restaurantId) {
         return getAllBetweenDates(restaurantId, DateTimeUtil.MIN_DATE, DateTimeUtil.MAX_DATE);
     }
 
+    @Cacheable("dishes")
     @Override
     public List<DishDto> getAllBetweenDates(long restaurantId, LocalDate startDate, LocalDate endDate) {
-        Assert.notNull(startDate, "startDate must not be null");
-        Assert.notNull(endDate, "endDate must not be null");
+        startDate = DateTimeUtil.correctStartDateIfNull(startDate);
+        endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         List<Dish> dishes = dao.getAllForRestaurantBetweenDates(restaurantId, startDate, endDate);
         return dishes != null ? MappingUtil.mapList(mapper, dishes, DishDto.class) : null;
     }
 
 
+    @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     @Override
     public DishDto create(DishDto dish, long restaurantId) {
@@ -59,6 +64,7 @@ public class DishServiceImpl implements DishService {
                 DishDto.class);
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     @Override
     public void update(DishDto dish, long restaurantId) throws NotFoundException {
@@ -66,12 +72,14 @@ public class DishServiceImpl implements DishService {
         checkNotFoundWithId(dao.save(mapper.map(dish, Dish.class), restaurantId), dish.getId());
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     @Transactional
     @Override
     public void delete(long id, long restaurantId) throws NotFoundException {
         checkNotFoundWithId(dao.delete(id, restaurantId), id);
     }
 
+    @Cacheable("dishes")
     @Override
     public List<Dish> getTodayMenu(long restaurantId) {
         // Get menu for today

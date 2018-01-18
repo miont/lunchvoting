@@ -10,6 +10,8 @@ import com.example.lunchvoting.util.exception.NotFoundException;
 import com.example.lunchvoting.util.mapping.MappingUtil;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
     @Autowired
     Mapper mapper;
 
+    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     @Override
     public PersonDto create(PersonDto person) {
@@ -62,11 +65,13 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
         throw new NotImplementedException();   // TODO: implement or delete
     }
 
+    @Cacheable("users")
     @Override
     public List<PersonDto> getAll() {
         return MappingUtil.mapList(mapper, dao.getAll(), PersonDto.class);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     @Override
     public void update(PersonDto person) {
@@ -74,6 +79,7 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
         dao.save(prepareToSave(mapper.map(person, Person.class)));
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     @Override
     public void delete(long id) throws NotFoundException {

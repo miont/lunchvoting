@@ -58,10 +58,14 @@
 
         <property name="jpaProperties">
             <props>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
-                <!--<prop key="net.sf.ehcache.configurationResourceName">cache/ehcache.xml</prop>-->
+                <prop key="net.sf.ehcache.configurationResourceName">cache/ehcache.xml</prop>
+                <prop key="hibernate.jdbc.batch_size">50</prop>
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
 
                 <prop key="hibernate.generate_statistics">true</prop>
             </props>
@@ -76,5 +80,9 @@
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
+
+    <!-- Translates Hibernate exceptions to Spring Data Access Exceptions -->
+    <!--https://stackoverflow.com/questions/22063273/convert-hibernate-exceptions-in-spring-roo-to-spring-data-access-exceptions-->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
 </beans>

@@ -3,6 +3,7 @@ package com.example.lunchvoting.web.json;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
@@ -26,8 +27,10 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
         setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        // Not including null fields. Actually this doesnt work... why?
+        // Not including null fields
         setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        enable(DeserializationFeature.USE_LONG_FOR_INTS); //doesnt work :(
     }
 
     public static ObjectMapper getMapper() {

@@ -1,6 +1,7 @@
 package com.example.lunchvoting.domain;
 
 import com.example.lunchvoting.util.HasId;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 
@@ -14,7 +15,6 @@ public abstract class AbstractBaseEntity implements DomainObject, HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Access(value = AccessType.PROPERTY)
     protected Long id;
 
 //    protected Integer version;
@@ -50,7 +50,7 @@ public abstract class AbstractBaseEntity implements DomainObject, HasId {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
 
         AbstractBaseEntity that = (AbstractBaseEntity) o;
 

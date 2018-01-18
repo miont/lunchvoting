@@ -54,9 +54,9 @@ public class DishDaoJpaImpl extends GenericDaoJpaImpl<Dish> implements DishDao {
     @Override
     @Transactional
     public boolean delete(long id, long restaurantId) {
-        return entityManager.createNamedQuery(Dish.DELETE, Dish.class)
+        return entityManager.createNamedQuery(Dish.DELETE)
                 .setParameter("id", id)
-                .setParameter("restaurantId", id)
-                .executeUpdate() > 0;
+                .setParameter("restaurantId", restaurantId)
+                .executeUpdate() != 0;
     }
 }

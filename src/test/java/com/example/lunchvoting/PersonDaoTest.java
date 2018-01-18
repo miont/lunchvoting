@@ -1,7 +1,6 @@
 package com.example.lunchvoting;
 
 import com.example.lunchvoting.domain.Person;
-import com.example.lunchvoting.domain.Role;
 import com.example.lunchvoting.dao.PersonDao;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,11 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import static com.example.lunchvoting.util.PersonTestData.USER_NEW;
+import static com.example.lunchvoting.util.testdata.PersonTestData.USER_NEW;
 
 
 /**
@@ -38,10 +35,10 @@ public class PersonDaoTest {
 
     @Test
     public void testPerson() {
-        Person newPerson = USER_NEW;
+        Person newPerson = new Person(USER_NEW);
         personDao.save(newPerson);
         List<Person> people = personDao.getAll();
-        Assert.assertEquals(3, people.size());
-        Assert.assertEquals(newPerson, people.get(people.size()-1));
+        Assert.assertEquals(4, people.size());
+        Assert.assertEquals(newPerson, people.get(1));
     }
 }

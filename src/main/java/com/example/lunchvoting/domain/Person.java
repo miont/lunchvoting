@@ -1,5 +1,7 @@
 package com.example.lunchvoting.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
@@ -15,11 +17,15 @@ import org.hibernate.annotations.Cache;
 /**
  *
  */
+@NamedQueries({
+        @NamedQuery(name = Person.ALL_SORTED, query = "SELECT p FROM Person p ORDER BY p.username")
+})
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "users", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users")
 public class Person extends AbstractBaseEntity {
+    public static final String ALL_SORTED = "Person.getAll";
 
     @NotBlank
     @Column(unique = true)
@@ -30,7 +36,7 @@ public class Person extends AbstractBaseEntity {
     @Column(unique = true)
     private String email;
 
-    @Size(min = 5, max = 32)
+    @Size(min = 5)
     private String password;
 
     private Date registered = new Date();
@@ -42,13 +48,14 @@ public class Person extends AbstractBaseEntity {
     private String lastName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    @BatchSize(size = 100)
     List<Vote> votes;
-
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     Set<Role> roles;
 
     public Person() {

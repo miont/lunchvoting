@@ -13,14 +13,8 @@ public class SecurityTest {
 
     @Test
     public void testEncoding() {
-        String testPassword = "54321";
+        String testPassword = "qwerty";
         System.out.println(PasswordUtil.encode(testPassword));
         Assert.assertTrue(PasswordUtil.isMatch(testPassword, PasswordUtil.encode(testPassword)));
     }
-
-//    @Test
-//    public void testAuthenticationPrincipal() {
-//        ;
-//        System.out.println(authorizedPerson.getUsername());
-//    }
 }

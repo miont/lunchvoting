@@ -24,7 +24,7 @@ import java.time.LocalDate;
         @NamedQuery(name=Dish.DELETE, query = "DELETE FROM Dish dish WHERE dish.id = :id AND dish.restaurant.id = :restaurantId")
 })
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "dishes", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "dishes")
 public class Dish extends AbstractNamedEntity {
@@ -34,7 +34,7 @@ public class Dish extends AbstractNamedEntity {
 
     @NotNull
     @Min(value = 0)
-    private int price; // in cents  //TODO: try use Joda Money or JSR 354
+    private int price; // in cents  //TODO: try to use Joda Money or JSR 354
 
     @ManyToOne
     @JoinColumn(name="restaurant_id")
@@ -48,19 +48,23 @@ public class Dish extends AbstractNamedEntity {
     public Dish() {
     }
 
-    public Dish(Long id, String name, @NotNull @Min(value = 0) int price, Restaurant restaurant, @NotNull LocalDate date) {
+    public Dish(Long id, String name, int price, Restaurant restaurant, LocalDate date) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
         this.date = date;
     }
 
-    public Dish(String name, @NotNull @Min(value = 0) int price, @NotNull LocalDate date) {
+    public Dish(String name, int price, LocalDate date) {
         this(null, name, price, null, date);
     }
 
-    public Dish(String name, @NotNull @Min(value = 0) int price, Restaurant restaurant, @NotNull LocalDate date) {
+    public Dish(String name, int price, Restaurant restaurant, LocalDate date) {
         this(null, name, price, restaurant, date);
+    }
+
+    public Dish(Dish dish) {
+        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant(), dish.getDate());
     }
 
     public int getPrice() {

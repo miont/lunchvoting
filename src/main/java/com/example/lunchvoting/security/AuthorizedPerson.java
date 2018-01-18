@@ -25,6 +25,7 @@ public class AuthorizedPerson extends org.springframework.security.core.userdeta
 
     public AuthorizedPerson(Person person) {
         super(person.getUsername(), person.getPassword(), person.getRoles());
+        PersonDto personDto = MappingUtil.getMapper().map(person, PersonDto.class);
         this.personDto = MappingUtil.getMapper().map(person, PersonDto.class);
     }
 

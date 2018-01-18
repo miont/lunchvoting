@@ -5,6 +5,7 @@ import com.example.lunchvoting.domain.Restaurant;
 import com.example.lunchvoting.dto.PersonDto;
 import com.example.lunchvoting.dto.RestaurantDto;
 import com.example.lunchvoting.service.RestaurantService;
+import com.example.lunchvoting.util.RestUtil;
 import com.example.lunchvoting.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,28 +25,28 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantRestController {
-    static final String REST_URL = "/api/restaurants";
+    static final String REST_URL = RestUtil.REST_URL_ROOT + "/restaurants";
+    static final String REST_URL_ADMIN = RestUtil.REST_URL_ADMIN_ROOT + "/restaurants";
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private RestaurantService service;
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = REST_URL + "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RestaurantDto get(@PathVariable("id") long id) {
         log.info("get restaurant {}", id);
         return service.get(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantDto> getAll() {
         log.info("getAll");
         return service.getAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = REST_URL_ADMIN, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantDto> create(@Valid @RequestBody RestaurantDto restaurant) {
         log.info("create {}", restaurant);
         RestaurantDto created = service.create(restaurant);
@@ -57,15 +58,15 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = REST_URL_ADMIN + "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void update(@Valid @RequestBody RestaurantDto restaurant, @PathVariable long id) {
         ValidationUtil.assureIdConsistent(restaurant, id);
         log.info("update {}", restaurant);
         service.update(restaurant);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void delete(@RequestParam long id) {
+    @DeleteMapping(value = REST_URL_ADMIN + "/{id}")
+    public void delete(@PathVariable long id) {
         log.info("delete restaurant {}", id);
         service.delete(id);
     }

@@ -35,7 +35,7 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
 
     @Override
     public List<T> getAll() {
-        return entityManager.createQuery("select obj from " + type.getName() + " obj")
+        return entityManager.createQuery("SELECT obj FROM " + type.getName() + " obj")
                 .getResultList();
     }
 
@@ -54,8 +54,8 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
     @Override
     @Transactional
     public boolean delete(long id) {
-
-        Query query = entityManager.createQuery("DELETE FROM Person p WHERE p.id = :id");
-        return query.setParameter("id", id).executeUpdate() != 0;
+        return entityManager.createQuery("DELETE FROM " + type.getName() + " obj WHERE obj.id = :id")
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 }

@@ -9,6 +9,9 @@ VALUES ('bigboss', 'realchuck@gmail.com', '$2a$10$FuaITg3NDcVwL4/t7cg6WOF/vNsLPL
 INSERT INTO users (username, email, password, first_name, last_name)
 VALUES ('casualnerd', 'tommy@gmail.com', '$2a$10$H/Z8SdyvI.jDqNP9Gtd0LOGAkgQ5eYjf8JfSwKAbPQrprVLtf.41O', 'Tom', 'Smith');
 
+INSERT INTO users (username, email, password, first_name, last_name)
+VALUES ('justuser', 'homer@gmail.com', '$2a$10$n.AH55lFQpscX/ZPUKjlS.QzCTkPEnK9BgnoSz2sXajnym.hzpWKK', 'Homer', 'Simpson');
+
 INSERT INTO user_roles (role, user_id) VALUES
   ('USER',  1),
   ('ADMIN', 1),
@@ -55,3 +58,6 @@ VALUES (1, 1, CURRENT_DATE, '08:00:00');
 
 INSERT INTO votes (user_id, restaurant_id, date, time)
 VALUES (2, 1, CURRENT_DATE, '10:00:00');
+
+INSERT INTO votes (user_id, restaurant_id, date, time)
+VALUES (1, 2, CURRENT_DATE - INTERVAL '1' DAY, '09:00:00');

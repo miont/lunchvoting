@@ -5,6 +5,7 @@ import com.example.lunchvoting.security.AuthorizedPerson;
 import com.example.lunchvoting.security.CurrentUser;
 import com.example.lunchvoting.util.RestUtil;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +17,7 @@ public class ProfileRestController extends AbstractPersonController {
     public static final String REST_URL = RestUtil.REST_URL_ROOT + "/profile";
 
     @GetMapping
-    public PersonDto get( @CurrentUser AuthorizedPerson authorizedPerson) {
+    public PersonDto get(@CurrentUser AuthorizedPerson authorizedPerson) {
         return super.get(authorizedPerson.id());
     }
 

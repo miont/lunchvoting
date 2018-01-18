@@ -9,28 +9,54 @@ import java.time.LocalTime;
  */
 public class VoteDto extends BaseDto {
 
-    private long userId;
+    private Long userId;
 
-    private long restaurantId;
+    private Long restaurantId;
 
     private LocalDate date;
     private LocalTime time;
 
     private boolean successfull = true;
 
-    public long getUserId() {
+    public VoteDto() {
+    }
+
+    public VoteDto(Long id, Long userId, Long restaurantId, LocalDate date, LocalTime time) {
+        super(id);
+        this.userId = userId;
+        this.restaurantId = restaurantId;
+        this.date = date;
+        this.time = time;
+    }
+
+    public VoteDto(Long userId, Long restaurantId, LocalDate date, LocalTime time) {
+        super(null);
+        this.userId = userId;
+        this.restaurantId = restaurantId;
+        this.date = date;
+        this.time = time;
+    }
+
+    public VoteDto(Long restaurantId, LocalDate date, LocalTime time) {
+        this.userId = null;
+        this.restaurantId = restaurantId;
+        this.date = date;
+        this.time = time;
+    }
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getRestaurantId() {
+    public Long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(long restaurantId) {
+    public void setRestaurantId(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
 

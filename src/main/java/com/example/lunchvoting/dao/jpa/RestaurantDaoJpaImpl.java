@@ -1,6 +1,7 @@
 package com.example.lunchvoting.dao.jpa;
 
 import com.example.lunchvoting.dao.RestaurantDao;
+import com.example.lunchvoting.domain.Person;
 import com.example.lunchvoting.domain.Restaurant;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,12 @@ public class RestaurantDaoJpaImpl extends GenericDaoJpaImpl<Restaurant> implemen
 
     public RestaurantDaoJpaImpl() {
         super(Restaurant.class);
+    }
+
+    @Override
+    public List<Restaurant> getAll() {
+        return entityManager.createNamedQuery(Restaurant.ALL_SORTED, Restaurant.class)
+                .getResultList();
     }
 
     @Override

@@ -22,4 +22,6 @@ public interface RestaurantService {
 
     void delete(long id)  throws NotFoundException;
 
+    long getTodayVotesCount(long id);
+
 }

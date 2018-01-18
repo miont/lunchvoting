@@ -9,6 +9,8 @@ import com.example.lunchvoting.util.exception.NotFoundException;
 import com.example.lunchvoting.util.mapping.MappingUtil;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -39,6 +41,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private Mapper mapper;
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public RestaurantDto create(RestaurantDto restaurant) {
@@ -64,6 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDto;
     }
 
+    @Cacheable("restaurants")
     @Override
     public List<RestaurantDto> getAll() {
 
@@ -74,9 +78,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         restaurants.forEach(restaurant -> {restaurant.setMenu(dishService.getTodayMenu(restaurant.getId()));});
 
-        return MappingUtil.mapList(mapper, restaurants, RestaurantDto.class); // TODO: probably doesn't work with menu
+        List<RestaurantDto> restaurantsDto = MappingUtil.mapList(mapper, restaurants, RestaurantDto.class);
+        restaurantsDto.forEach(restaurant -> {restaurant.setVotesTodayCount(getTodayVotesCount(restaurant.getId()));});
+
+        return restaurantsDto;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public void update(RestaurantDto restaurant) {
@@ -84,6 +92,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantDao.save(mapper.map(restaurant, Restaurant.class));
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public void delete(long id) {

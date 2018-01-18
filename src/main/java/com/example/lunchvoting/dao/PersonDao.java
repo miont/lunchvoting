@@ -2,6 +2,8 @@ package com.example.lunchvoting.dao;
 
 import com.example.lunchvoting.domain.Person;
 
+import java.util.List;
+
 /**
  *
  */

@@ -50,7 +50,7 @@ public class PersonRestController extends AbstractPersonController {
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody PersonDto person, @PathVariable("id") long id) {  // TODO: validate id is consistent with person object
+    public void update(@Valid @RequestBody PersonDto person, @PathVariable("id") long id) {  // TODO: validate id is consistent with person object
         super.update(person, id);
     }
 

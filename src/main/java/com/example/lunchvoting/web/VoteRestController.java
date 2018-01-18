@@ -9,6 +9,7 @@ import com.example.lunchvoting.util.RestUtil;
 import com.example.lunchvoting.web.person.PersonRestController;
 import com.example.lunchvoting.web.person.ProfileRestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +38,21 @@ public class VoteRestController {
     }
 
     @GetMapping(value = RestaurantRestController.REST_URL + "{id}/votes")
-    public List<VoteDto> getAllForRestaurant(@PathVariable("id") long restaurantId, @RequestParam(name = "startDate", required = false) LocalDate startDate, @RequestParam(name = "endDate", required = false) LocalDate endDate) {
+    public List<VoteDto> getAllForRestaurant(@PathVariable("id") long restaurantId, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) {
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return service.getAllForRestaurantBetweenDates(restaurantId, startDate, endDate);
     }
 
     @GetMapping(value = PersonRestController.REST_URL + "{id}/votes")
-    public List<VoteDto> getAllForUser(@PathVariable("id") long userId, @RequestParam(name = "startDate", required = false) LocalDate startDate, @RequestParam(name = "endDate", required = false) LocalDate endDate) {
+    public List<VoteDto> getAllForUser(@PathVariable("id") long userId, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) {
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return service.getAllForUserBetweenDates(userId, startDate, endDate);
     }
 
     @GetMapping(value = ProfileRestController.REST_URL + "/votes")
-    public List<VoteDto> getAllForCurrentUser(@CurrentUser AuthorizedPerson authorizedPerson, @RequestParam(name = "startDate", required = false) LocalDate startDate, @RequestParam(name = "endDate", required = false) LocalDate endDate) {
+    public List<VoteDto> getAllForCurrentUser(@CurrentUser AuthorizedPerson authorizedPerson, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) {
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return service.getAllForUserBetweenDates(authorizedPerson.id(), startDate, endDate);

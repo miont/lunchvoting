@@ -19,6 +19,7 @@ import static com.example.lunchvoting.util.testdata.VoteTestData.VOTE_BEFORE_11;
 import static com.example.lunchvoting.util.testdata.VoteTestData.VOTE_NEW;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -102,5 +103,20 @@ public class VoteRestControllerTest extends AbstractControllerTest {
                 .with(csrf()))
                 .andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testVoteUnauthorized() throws Exception{
+        mockMvc.perform(post(RestUtil.REST_URL_ROOT + "/votes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(VOTE_NEW))
+                .with(csrf()))
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
+
+        mockMvc.perform(post(RestaurantRestController.REST_URL + "/" + RestaurantTestData.RESTAURANT2_ID + "/votes")
+                .with(csrf()))
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
     }
 }

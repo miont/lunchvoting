@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder.*;
 /**
  *
  */
@@ -62,17 +62,19 @@ public class DishRestControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$[0].date", is(RESTAURANT1_DISH2.getDate().toString())));
     }
 
-//    @Test
-//    public void testGetAllToday() throws Exception {
-//        mockMvc.perform(get(buildUrl(REST_URL, RESTAURANT1_ID) + "?startDate=" + LocalDate.now()))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$", hasSize(3)))
-//                .andExpect(jsonPath("$[0].name", is(RESTAURANT1_DISH6.getName())))
-//                .andExpect(jsonPath("$[0].price", is(RESTAURANT1_DISH6.getPrice())))
-//                .andExpect(jsonPath("$[0].date", is(RESTAURANT1_DISH6.getDate().toString())));
-//    }
+    @Test
+    public void testGetAllToday() throws Exception {
+        mockMvc.perform(get(buildUrl(REST_URL, RESTAURANT1_ID))
+                .param("startDate", LocalDate.now().toString())
+                .param("endDate", LocalDate.now().toString()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].name", is(RESTAURANT1_DISH6.getName())))
+                .andExpect(jsonPath("$[0].price", is(RESTAURANT1_DISH6.getPrice())))
+                .andExpect(jsonPath("$[0].date", is(RESTAURANT1_DISH6.getDate().toString())));
+    }
 
     @Test
     public void testCreate() throws Exception {

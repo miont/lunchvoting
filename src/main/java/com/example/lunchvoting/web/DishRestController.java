@@ -8,6 +8,7 @@ import com.example.lunchvoting.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class DishRestController {
     }
 
     @GetMapping(value = REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DishDto> getAll(@PathVariable("restaurantId") long restaurantId, @RequestParam(name = "startDate", required = false) LocalDate startDate, @RequestParam(name = "endDate", required = false) LocalDate endDate) {
+    public List<DishDto> getAll(@PathVariable("restaurantId") long restaurantId, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) { // TODO: use date formatter
         log.info("getAll for restaurant {}", restaurantId);
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);

@@ -63,3 +63,6 @@ disable csrf in spring-security.xml to test with curl
 
 #### get all votes for profile
 `curl -s http://localhost:8080/lunchvoting/api/profile/votes --user casualnerd:54321`
+
+#### register user
+`curl -s -X POST -d '{"username":"robert", "password":"password","email":"abcd@gmail.com","firstName":"Robert","lastName":"Smith","roles":["USER"]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/lunchvoting/api/register/`

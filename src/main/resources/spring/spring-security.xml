@@ -11,6 +11,7 @@
         <intercept-url pattern="/api/admin/**" access="hasAuthority('ADMIN')"/>
         <intercept-url pattern="/api/profile/**" access="isAuthenticated()"/>
         <intercept-url pattern="/api/**/votes/**" access="isAuthenticated()"/>
+        <csrf disabled="true"/>
     </http>
 
     <http>

@@ -4,11 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Test Page</title>
+    <title>Lunch voting</title>
 </head>
 <body>
     <div>
-        <p>Hello there!</p>
+        <h1>Lunch voting</h1>
     </div>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class ValidationUtil {
         checkNotFound(found, "id=" + id);
     }
 
-    public static <T> T checkNotFoundWithId(T object, long id) {
+    public static <T extends HasId> T checkNotFoundWithId(T object, long id) {
         return checkNotFound(object, "id=" + id);
     }
 

@@ -20,7 +20,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = PersonRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-// TODO: Different controllers for admin (can get all users, create, update, delete) and regular users
 public class PersonRestController extends AbstractPersonController {
 
     public static final String REST_URL = RestUtil.REST_URL_ADMIN_ROOT + "/users";

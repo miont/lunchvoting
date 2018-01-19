@@ -16,4 +16,6 @@ public interface GenericDao<T extends DomainObject> {
     T save(T object);
 
     boolean delete(long id);
+
+    boolean isEntityExist(long id);
 }

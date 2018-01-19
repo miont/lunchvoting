@@ -5,6 +5,7 @@ import com.example.lunchvoting.domain.Person;
 import com.example.lunchvoting.domain.Restaurant;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;

@@ -58,4 +58,12 @@ public class GenericDaoJpaImpl<T extends DomainObject> implements GenericDao<T> 
                 .setParameter("id", id)
                 .executeUpdate() != 0;
     }
+
+    //https://stackoverflow.com/questions/4374730/how-to-check-if-a-record-exists-using-jpa
+    @Override
+    public boolean isEntityExist(long id) {
+        Long count = (Long)entityManager.createQuery("SELECT COUNT(obj) FROM " + type.getName() + " obj WHERE obj.id = :id")
+                .setParameter("id", id).getSingleResult();
+        return count.equals(0L) ? false : true;
+    }
 }

@@ -13,16 +13,6 @@
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-
-    <!--<context:property-placeholder location="classpath:db/h2.properties" system-properties-mode="OVERRIDE"/>-->
-
-    <!--<bean id="dataSource"-->
-          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource"-->
-          <!--p:driverClassName="org.h2.Driver"-->
-          <!--p:url="${database.url}"-->
-          <!--p:username="${database.username}"-->
-          <!--p:password="${database.password}"/>-->
-
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
     <bean id="dataSource"
     class="org.springframework.jdbc.datasource.DriverManagerDataSource"
@@ -49,12 +39,13 @@
         <!--<jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>-->
     <!--</jdbc:initialize-database>-->
 
+    <tx:annotation-driven/>
+
     <context:component-scan base-package="com.example.**.dao"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="com.example.lunchvoting.**.domain">
-        <!--p:persistenceUnitName="persistenceUnit">-->
 
         <property name="jpaProperties">
             <props>

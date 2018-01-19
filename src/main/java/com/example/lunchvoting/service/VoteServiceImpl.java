@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.example.lunchvoting.util.ValidationUtil.checkNotFoundWithId;
+import static com.example.lunchvoting.util.ValidationUtil.*;
 
 /**
  *
@@ -52,8 +52,8 @@ public class VoteServiceImpl implements VoteService {
         if(voteDto.getDate() == null) voteDto.setDate(LocalDate.now());
         if(voteDto.getTime() == null) voteDto.setTime(LocalTime.now());
         // check user and restaurant exist
-        checkNotFoundWithId(personDao.get(voteDto.getUserId()), voteDto.getUserId());
-        checkNotFoundWithId(restaurantDao.get(voteDto.getRestaurantId()), voteDto.getRestaurantId());
+        checkNotFoundWithId(personDao.isEntityExist(voteDto.getUserId()), voteDto.getUserId());
+        checkNotFoundWithId(restaurantDao.isEntityExist(voteDto.getRestaurantId()), voteDto.getRestaurantId());
         // Check if there was already vote from this user on current date
         Vote existedVote = dao.getForUserOnDate(voteDto.getUserId(), voteDto.getDate());
         if(existedVote == null || voteDto.getTime().isBefore(LIMIT_VOTE_TIME)) {
@@ -72,7 +72,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<VoteDto> getAllForRestaurantBetweenDates(long restaurantId, LocalDate startDate, LocalDate endDate) {
-        checkNotFoundWithId(restaurantDao.get(restaurantId), restaurantId);
+        checkNotFoundWithId(restaurantDao.isEntityExist(restaurantId), restaurantId);
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return MappingUtil.mapList(mapper, dao.getAllForRestaurant(restaurantId, startDate, endDate), VoteDto.class);
@@ -85,7 +85,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<VoteDto> getAllForUserBetweenDates(long userId, LocalDate startDate, LocalDate endDate) {
-        checkNotFoundWithId(personDao.get(userId), userId);
+        checkNotFoundWithId(personDao.isEntityExist(userId), userId);
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return MappingUtil.mapList(mapper, dao.getAllForUser(userId, startDate, endDate), VoteDto.class);

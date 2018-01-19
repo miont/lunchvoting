@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.example.lunchvoting.util.UserUtil.prepareToSave;

@@ -20,7 +20,7 @@ import java.time.LocalDate;
  */
 
 @NamedQueries({
-        @NamedQuery(name = Dish.ALL_FOR_RESTAURANT, query = "SELECT dish FROM Dish dish WHERE dish.restaurant.id = :restaurantId AND dish.date BETWEEN :startDate AND :endDate ORDER BY dish.name"),
+        @NamedQuery(name = Dish.ALL_FOR_RESTAURANT, query = "SELECT dish FROM Dish dish WHERE dish.restaurant.id = :restaurantId AND dish.date BETWEEN :startDate AND :endDate ORDER BY dish.date DESC, dish.name"),
         @NamedQuery(name=Dish.DELETE, query = "DELETE FROM Dish dish WHERE dish.id = :id AND dish.restaurant.id = :restaurantId")
 })
 @Cacheable

@@ -14,9 +14,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return mapper.map(restaurantDao.save(mapper.map(restaurant, Restaurant.class)), RestaurantDto.class);
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
     @Override
     public RestaurantDto get(long id)  throws NotFoundException {
 
@@ -63,7 +65,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurant.setMenu(dishService.getTodayMenu(id));
         }
 
-        RestaurantDto restaurantDto = mapper.map(restaurant, RestaurantDto.class); // TODO: probably doesn't work with menu
+        RestaurantDto restaurantDto = mapper.map(restaurant, RestaurantDto.class);
         restaurantDto.setVotesTodayCount(getTodayVotesCount(id));
 
         return restaurantDto;

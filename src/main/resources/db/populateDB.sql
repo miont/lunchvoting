@@ -15,7 +15,8 @@ VALUES ('justuser', 'homer@gmail.com', '$2a$10$n.AH55lFQpscX/ZPUKjlS.QzCTkPEnK9B
 INSERT INTO user_roles (role, user_id) VALUES
   ('USER',  1),
   ('ADMIN', 1),
-  ('USER',  2);
+  ('USER',  2),
+  ('USER',  3);
 
 -- Restaurants
 INSERT INTO restaurants (name, address, url)

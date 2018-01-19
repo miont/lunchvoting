@@ -37,14 +37,14 @@ public class VoteRestController {
         return service.makeVote(authorizedPerson.id(), restaurantId);
     }
 
-    @GetMapping(value = RestaurantRestController.REST_URL + "{id}/votes")
+    @GetMapping(value = RestaurantRestController.REST_URL_ADMIN + "/{id}/votes")
     public List<VoteDto> getAllForRestaurant(@PathVariable("id") long restaurantId, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) {
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);
         return service.getAllForRestaurantBetweenDates(restaurantId, startDate, endDate);
     }
 
-    @GetMapping(value = PersonRestController.REST_URL + "{id}/votes")
+    @GetMapping(value = PersonRestController.REST_URL + "/{id}/votes")
     public List<VoteDto> getAllForUser(@PathVariable("id") long userId, @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate startDate, @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = DateTimeUtil.DATE_PATTERN) LocalDate endDate) {
         startDate = DateTimeUtil.correctStartDateIfNull(startDate);
         endDate = DateTimeUtil.correctEndDateIfNull(endDate);

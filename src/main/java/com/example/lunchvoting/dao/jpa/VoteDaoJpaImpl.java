@@ -60,8 +60,8 @@ public class VoteDaoJpaImpl extends GenericDaoJpaImpl<Vote> implements VoteDao {
 
     @Override
     public List<Vote> getAllForUser(long userId, LocalDate startDate, LocalDate endDate) {
-        return entityManager.createNamedQuery(Vote.ALL_FOR_RESTAURANT)
-                .setParameter("userId", userId)
+        return entityManager.createNamedQuery(Vote.ALL_FOR_USER)
+                .setParameter("personId", userId)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
                 .getResultList();

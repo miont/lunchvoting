@@ -57,9 +57,9 @@ public class DishRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(6)))
-                .andExpect(jsonPath("$[0].name", is(RESTAURANT1_DISH2.getName())))
-                .andExpect(jsonPath("$[0].price", is(RESTAURANT1_DISH2.getPrice())))
-                .andExpect(jsonPath("$[0].date", is(RESTAURANT1_DISH2.getDate().toString())));
+                .andExpect(jsonPath("$[0].name", is(RESTAURANT1_DISH6.getName())))
+                .andExpect(jsonPath("$[0].price", is(RESTAURANT1_DISH6.getPrice())))
+                .andExpect(jsonPath("$[0].date", is(RESTAURANT1_DISH6.getDate().toString())));
     }
 
     @Test

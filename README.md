@@ -2,6 +2,7 @@ Restaurant voting system
 ===============================
 
 ### REST API brief description
+
 application deployed in application context `lunchvoting`
 
 ***Get all users***

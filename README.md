@@ -3,7 +3,7 @@ Restaurant voting system
 
 ### REST API brief description
 
-application deployed in application context `lunchvoting`
+Application deployed in application context `lunchvoting`
 
 ***Get all users***
 
